@@ -1,0 +1,31 @@
+@import '../../const/const.scss';
+
+.filter {
+  margin-top: 20px;
+
+  &__input {
+    margin-right: 10px;
+    padding: 5px 7px;
+    font-size: 14px;
+    border: 1px solid $borderColor;
+    border-radius: 3px;
+    color: $textColor;
+    outline: none;
+  }
+
+  &__button {
+    padding: 5px 7px;
+    font-size: 14px;
+    background: $buttonColor;
+    border: 1px solid $buttonColor;
+    border-radius: 3px;
+    color: $whiteColor;
+    outline: none;
+
+    &:hover {
+      cursor: pointer;
+      background: $buttonHoverColor;
+      border: 1px solid $buttonHoverColor;
+    }
+  }
+}

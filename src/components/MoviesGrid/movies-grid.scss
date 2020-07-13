@@ -1,0 +1,58 @@
+@import '../../const/const.scss';
+
+.movies-grid {
+  margin-top: 40px;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  &__item {
+    display: flex;
+    flex-basis: 23%;
+    flex-shrink: 1;
+    flex-grow: 1;
+    flex-direction: column;
+    max-width: 23%;
+    margin-bottom: 20px;
+    padding: 0 1%;
+
+    &:hover {
+      cursor: pointer;
+
+      .movies-grid__img {
+        opacity: 0.8;
+      }
+
+      .movies-grid__title {
+        color: $buttonColor;
+      }
+    }
+  }
+
+  &__img {
+    margin-bottom: 10px;
+    height: 200px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  &__title {
+    font-size: 14px;
+    text-align: center;
+    color: $textColor;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .movies-grid {
+    &__item {
+      flex-basis: 48%;
+      max-width: 48%;
+    }
+
+    &__img {
+      height: 150px;
+    }
+  }
+}
