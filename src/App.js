@@ -6,12 +6,13 @@ import './App.css';
 import useMoviesStore from "./customHooks/useMoviesStore";
 
 function App() {
-  const { fetchMovies, state } = useMoviesStore();
+  const { fetchMovies, fetchMovie, state } = useMoviesStore();
 
   return (
     <div className="App">
       <ListMovies
         fetchMovies={fetchMovies}
+        fetchMovie={fetchMovie}
         state={state}
       />
     </div>

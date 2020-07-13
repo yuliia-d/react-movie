@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react';
 
-import { getMovieList } from '../services/index';
+import { getMovieList, getMovie } from '../services/index';
 
 
 const useMoviesStore = () => {
@@ -40,7 +40,13 @@ const useMoviesStore = () => {
     dispatch({ type: 'FETCH_MOVIES', payload });
   }
 
-  return { fetchMovies, state }
+  const fetchMovie = async (id) => {
+    const payload = await getMovie(token, id);
+
+    dispatch({ type: 'FETCH_CURRENT_MOVIE', payload });
+  }
+
+  return { fetchMovies, fetchMovie, state }
 }
 
 export default useMoviesStore;

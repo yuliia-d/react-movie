@@ -14,3 +14,14 @@ export async function getMovieList(token, title, page = 1) {
     totalResults: result.data.totalResults,
   };
 }
+
+export async function getMovie(token, id) {
+  const result = await axios.get('http://www.omdbapi.com/', {
+    params: {
+      i: id,
+      apikey: token,
+    },
+  });
+
+  return result.data;
+}
