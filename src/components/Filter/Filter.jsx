@@ -10,7 +10,6 @@ const Filter = ({ fetchMovies }) => {
   }
 
   const findMovie = () => {
-    debugger;
     fetchMovies(value);
   }
 

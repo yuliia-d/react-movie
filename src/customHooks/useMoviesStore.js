@@ -8,14 +8,21 @@ const useMoviesStore = () => {
   const initialState = {
     movies: [],
     currentMovie: null,
+    totalResults: 10,
   };
 
   function reducer(state, action) {
     switch (action.type) {
       case 'FETCH_MOVIES':
-        return { movies: [...action.payload] };
+        return {
+          ...state,
+          ...action.payload
+        };
       case 'FETCH_CURRENT_MOVIE':
-        return { currentMovie: action.payload };
+        return {
+          ...state,
+          currentMovie: action.payload
+        };
       default:
         return state;
     }
@@ -24,8 +31,11 @@ const useMoviesStore = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const fetchMovies = async (title) => {
-    const data = await getMovieList(token, title);
-    const payload = Array.isArray(data) ? data : [data];
+    const { movies, totalResults } = await getMovieList(token, title);
+    const payload = {
+      movies: Array.isArray(movies) ? movies : [movies],
+      totalResults,
+    };
 
     dispatch({ type: 'FETCH_MOVIES', payload });
   }

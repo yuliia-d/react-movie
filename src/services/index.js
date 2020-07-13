@@ -9,5 +9,8 @@ export async function getMovieList(token, title, page = 1) {
     },
   });
 
-  return result.data.Search;
+  return {
+    movies: result.data.Search,
+    totalResults: result.data.totalResults,
+  };
 }
