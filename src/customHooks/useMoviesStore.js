@@ -1,76 +1,63 @@
-import React, { useReducer } from 'react';
+import React, { useReducer } from "react";
 
-import { getMovieList, getMovie } from '../services/index';
-
+import { getMovieList, getMovie } from "../services/index";
+import useMoviesInitialStateReducer from "./useMoviesInitialStateReduser";
 
 const useMoviesStore = () => {
   const token = '273b9080';
-  const initialState = {
-    movies: [],
-    currentMovie: {},
-    totalResults: 10,
-    title: 'Batman',
-  };
-
-  function reducer(state, action) {
-    switch (action.type) {
-      case 'FETCH_MOVIES':
-        return {
-          ...state,
-          ...action.payload
-        };
-      case 'FETCH_MOVIES_BY_PAGE': {
-        const { movies, totalResults } = action.payload;
-
-        return {
-          ...state,
-          movies: [...state.movies, ...movies],
-          totalResults,
-        };
-      }
-      case 'FETCH_CURRENT_MOVIE':
-        return {
-          ...state,
-          currentMovie: action.payload
-        };
-      case 'SET_TITLE': {
-        return {
-          ...state,
-          title: action.payload,
-        }
-      }
-      default:
-        return state;
-    }
-  }
-
+  const { reducer, initialState } = useMoviesInitialStateReducer();
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const fetchMovies = async (title, page) => {
-    const { movies, totalResults } = await getMovieList(token, title, page);
-    const payload = {
-      movies: Array.isArray(movies) ? movies : [movies],
-      totalResults,
-    };
+  const fetchMovies = async (title, page = 1) => {
+    try {
+      const { movies, totalResults, Error } = await getMovieList(token, title, page);
 
-    if (page && page > 1) {
-      dispatch({ type: 'FETCH_MOVIES_BY_PAGE', payload });
-    } else {
-      dispatch({ type: 'FETCH_MOVIES', payload });
+      if (Error) {
+        dispatch({ type: 'SET_ERROR', payload: Error });
+        dispatch({
+          type: 'FETCH_MOVIES',
+          payload: { movies: [], totalResults: 0 }
+        });
+
+        return;
+      }
+
+      dispatch({ type: 'SET_ERROR', payload: null });
+
+      const payload = {
+        movies: Array.isArray(movies) ? movies : [movies],
+        totalResults,
+      };
+
+      if (page && page > 1) {
+        dispatch({ type: 'FETCH_MOVIES_BY_PAGE', payload });
+      } else {
+        dispatch({ type: 'FETCH_MOVIES', payload });
+      }
+    } catch (e) {
+      console.error(e);
     }
   }
 
   const fetchMovie = async (id) => {
-    const payload = await getMovie(token, id);
+    try {
+      const payload = await getMovie(token, id);
 
-    dispatch({ type: 'FETCH_CURRENT_MOVIE', payload });
+      dispatch({ type: 'FETCH_CURRENT_MOVIE', payload });
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   const setTitle = (payload) => {
     dispatch({ type: 'SET_TITLE', payload });
   }
 
-  return { fetchMovies, fetchMovie, setTitle, state }
+  const setPage = (payload) => {
+    dispatch({ type: 'SET_PAGE', payload });
+  }
+
+  return { fetchMovies, fetchMovie, setTitle, setPage, state }
 }
 
 export default useMoviesStore;

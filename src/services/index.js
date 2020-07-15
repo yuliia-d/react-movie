@@ -12,6 +12,7 @@ export async function getMovieList(token, title, page = 1) {
   return {
     movies: result.data.Search,
     totalResults: result.data.totalResults,
+    Error: result.data.Error,
   };
 }
 

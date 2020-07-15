@@ -1,14 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import Filter from '../../components/Filter/Filter';
 import MoviesGrid from "../../components/MoviesGrid/MoviesGrid";
 import './list-movies.scss';
 
-const ListMovies = ({ fetchMovies, fetchMovie, setTitle, state: { movies, totalResults, title } }) => {
+const ListMovies = ({
+  fetchMovies,
+  fetchMovie,
+  setTitle,
+  setPage,
+  state: { movies, totalResults, title, page, errorMessage },
+}) => {
   const lastPage = Math.ceil(totalResults / 10);
-  const [page, setPage] = useState(1);
 
   const onChangeMovieName = (value) => {
+    setPage(1);
     setTitle(value);
   }
 
@@ -25,12 +31,15 @@ const ListMovies = ({ fetchMovies, fetchMovie, setTitle, state: { movies, totalR
         fetchMovies={fetchMovies}
         value={title}
       />
-      <MoviesGrid
-        movies={movies}
-        fetchMovie={fetchMovie}
-      />
+      {errorMessage
+        ? <div className="list-movies__error">{errorMessage}</div>
+        : <MoviesGrid
+            movies={movies}
+            fetchMovie={fetchMovie}
+          />
+      }
       <div className="list-movies__footer">
-        {lastPage > page
+        {!errorMessage && lastPage > page
           && <button className="list-movies__button" onClick={fetchMovieListByPage}>Load more</button>
         }
       </div>

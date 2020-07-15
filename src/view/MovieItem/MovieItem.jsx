@@ -37,7 +37,7 @@ const MovieItem = ({ currentMovie, fetchMovie }) => {
 
   return(
     <div className="movie-item">
-      {currentMovie ?
+      {currentMovie && id === imdbID ?
         <div className="movie-item__block">
           <div className="movie-item__title">
             <h2>{currentMovie.Title}</h2>

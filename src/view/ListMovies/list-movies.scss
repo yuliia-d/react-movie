@@ -12,6 +12,13 @@
   &__button {
     @include button;
   }
+
+  &__error {
+    margin-top: 40px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ff7c1b;
+  }
 }
 
 @media screen and (max-width: 420px) {

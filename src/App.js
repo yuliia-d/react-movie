@@ -8,7 +8,7 @@ import './App.css';
 import useMoviesStore from "./customHooks/useMoviesStore";
 
 function App() {
-  const { fetchMovies, fetchMovie, setTitle, state } = useMoviesStore();
+  const { fetchMovies, fetchMovie, setTitle, setPage, state } = useMoviesStore();
 
   return (
     <Router>
@@ -19,6 +19,7 @@ function App() {
               fetchMovies={fetchMovies}
               fetchMovie={fetchMovie}
               setTitle={setTitle}
+              setPage={setPage}
               state={state}
             />}
           />
