@@ -20,15 +20,19 @@ const MovieItem = ({ currentMovie, fetchMovie }) => {
 
     return [
       {
+        id: 1,
         title: 'Plot',
         value: currentMovie.Plot,
       }, {
+        id: 2,
         title: 'IMDB rating',
         value: currentMovie.imdbRating,
       }, {
+        id: 3,
         title: 'Released',
         value: currentMovie.Released,
       }, {
+        id: 4,
         title: 'Type',
         value: currentMovie.Type,
       }
@@ -47,7 +51,7 @@ const MovieItem = ({ currentMovie, fetchMovie }) => {
           </div>
           <div className="movie-item__data">
             {movieInfo.map((movie) => (
-              <div className="movie-item__info">
+              <div key={movie.id} className="movie-item__info">
                 <p className="info__title">{movie.title}</p>
                 <p className="info__value">{movie.value}</p>
               </div>
