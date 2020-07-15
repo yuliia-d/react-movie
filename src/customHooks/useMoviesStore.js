@@ -7,8 +7,9 @@ const useMoviesStore = () => {
   const token = '273b9080';
   const initialState = {
     movies: [],
-    currentMovie: null,
+    currentMovie: {},
     totalResults: 10,
+    title: 'Batman',
   };
 
   function reducer(state, action) {
@@ -32,6 +33,12 @@ const useMoviesStore = () => {
           ...state,
           currentMovie: action.payload
         };
+      case 'SET_TITLE': {
+        return {
+          ...state,
+          title: action.payload,
+        }
+      }
       default:
         return state;
     }
@@ -59,7 +66,11 @@ const useMoviesStore = () => {
     dispatch({ type: 'FETCH_CURRENT_MOVIE', payload });
   }
 
-  return { fetchMovies, fetchMovie, state }
+  const setTitle = (payload) => {
+    dispatch({ type: 'SET_TITLE', payload });
+  }
+
+  return { fetchMovies, fetchMovie, setTitle, state }
 }
 
 export default useMoviesStore;

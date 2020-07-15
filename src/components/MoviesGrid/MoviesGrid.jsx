@@ -1,10 +1,13 @@
 import React from 'react';
+import { useHistory } from "react-router-dom";
 
 import './movies-grid.scss';
 
-const MoviesGrid = ({ movies = [], fetchMovie }) => {
+const MoviesGrid = ({ movies = [] }) => {
+  const history = useHistory();
+
   const chooseMovie = (id) => {
-    fetchMovie(id);
+    history.push(`/movie/${id}`);
   }
 
   return (

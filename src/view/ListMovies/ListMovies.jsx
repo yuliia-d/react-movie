@@ -1,21 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Filter from '../../components/Filter/Filter';
 import MoviesGrid from "../../components/MoviesGrid/MoviesGrid";
 import './list-movies.scss';
 
-const ListMovies = ({ fetchMovies, fetchMovie, state: { movies, totalResults } }) => {
+const ListMovies = ({ fetchMovies, fetchMovie, setTitle, state: { movies, totalResults, title } }) => {
   const lastPage = Math.ceil(totalResults / 10);
   const [page, setPage] = useState(1);
-  const [value, setValue] = useState('');
 
   const onChangeMovieName = (value) => {
-    setValue(value);
+    setTitle(value);
   }
 
   const fetchMovieListByPage = () => {
     setPage(page + 1);
-    fetchMovies(value, page + 1);
+    fetchMovies(title, page + 1);
   }
 
   return (
@@ -24,7 +23,7 @@ const ListMovies = ({ fetchMovies, fetchMovie, state: { movies, totalResults } }
       <Filter
         onChangeMovieName={onChangeMovieName}
         fetchMovies={fetchMovies}
-        value={value}
+        value={title}
       />
       <MoviesGrid
         movies={movies}

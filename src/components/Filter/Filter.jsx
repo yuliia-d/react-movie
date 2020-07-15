@@ -3,8 +3,16 @@ import './filter.scss';
 
 
 const Filter = ({ fetchMovies, value, onChangeMovieName }) => {
+  const [title, setTitle] = useState(value);
   const findMovie = () => {
-    fetchMovies(value);
+    fetchMovies(title);
+    onChangeMovieName(title);
+  }
+
+  const keyPress = ({ charCode }) => {
+    if(charCode === 13){
+      findMovie();
+    }
   }
 
   return (
@@ -12,8 +20,9 @@ const Filter = ({ fetchMovies, value, onChangeMovieName }) => {
       <input
         className="filter__input"
         type="text"
-        value={value}
-        onChange={({ target: { value } }) => onChangeMovieName(value)}
+        value={title}
+        onChange={({ target: { value } }) => setTitle(value)}
+        onKeyPress={keyPress}
       />
       <button
         className="filter__button"
