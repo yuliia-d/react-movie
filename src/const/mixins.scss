@@ -1,0 +1,15 @@
+@mixin button {
+  padding: 5px 7px;
+  font-size: 14px;
+  background: $buttonColor;
+  border: 1px solid $buttonColor;
+  border-radius: 3px;
+  color: $whiteColor;
+  outline: none;
+
+  &:hover {
+    cursor: pointer;
+    background: $buttonHoverColor;
+    border: 1px solid $buttonHoverColor;
+  }
+}

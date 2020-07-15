@@ -1,4 +1,5 @@
 @import '../../const/const.scss';
+@import '../../const/mixins.scss';
 
 .list-movies {
   padding: 50px 100px;
@@ -6,6 +7,10 @@
   &__header {
     margin-bottom: 10px;
     color: $textColor;
+  }
+
+  &__button {
+    @include button;
   }
 }
 

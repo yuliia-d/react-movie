@@ -2,13 +2,7 @@ import React, { useState } from 'react';
 import './filter.scss';
 
 
-const Filter = ({ fetchMovies }) => {
-  const [value, setValue] = useState('');
-
-  const onChangeMovieName = (value) => {
-    setValue(value);
-  }
-
+const Filter = ({ fetchMovies, value, onChangeMovieName }) => {
   const findMovie = () => {
     fetchMovies(value);
   }

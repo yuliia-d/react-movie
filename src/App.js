@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import ListMovies from './view/ListMovies/ListMovies';
 import './App.css';
 

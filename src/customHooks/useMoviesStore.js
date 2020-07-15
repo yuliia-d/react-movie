@@ -18,6 +18,15 @@ const useMoviesStore = () => {
           ...state,
           ...action.payload
         };
+      case 'FETCH_MOVIES_BY_PAGE': {
+        const { movies, totalResults } = action.payload;
+
+        return {
+          ...state,
+          movies: [...state.movies, ...movies],
+          totalResults,
+        };
+      }
       case 'FETCH_CURRENT_MOVIE':
         return {
           ...state,
@@ -30,14 +39,18 @@ const useMoviesStore = () => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const fetchMovies = async (title) => {
-    const { movies, totalResults } = await getMovieList(token, title);
+  const fetchMovies = async (title, page) => {
+    const { movies, totalResults } = await getMovieList(token, title, page);
     const payload = {
       movies: Array.isArray(movies) ? movies : [movies],
       totalResults,
     };
 
-    dispatch({ type: 'FETCH_MOVIES', payload });
+    if (page && page > 1) {
+      dispatch({ type: 'FETCH_MOVIES_BY_PAGE', payload });
+    } else {
+      dispatch({ type: 'FETCH_MOVIES', payload });
+    }
   }
 
   const fetchMovie = async (id) => {
